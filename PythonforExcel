@@ -1,0 +1,11 @@
+import pandas as pd
+import pyodbc
+
+dados_conexão= (
+    "Driver={SQL server};"
+    "server= localhost;"
+    "database= plataforma_ead;"
+);
+
+conexao= pyodbc.connect (dados_conexão)
+print ("Show! Deu certo.")

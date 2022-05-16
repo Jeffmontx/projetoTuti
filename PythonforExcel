@@ -1,11 +1,15 @@
 import pandas as pd
-import pyodbc
-
-dados_conexão= (
-    "Driver={SQL server};"
-    "server= localhost;"
-    "database= plataforma_ead;"
-);
-
-conexao= pyodbc.connect (dados_conexão)
-print ("Show! Deu certo.")
+import mysql.connector
+from mysql.connector import errorcode
+try:
+	db_connection = mysql.connector.connect(host='localhost', user='root', password='12345', database='plataforma_ead')
+	print("BOA MANO! CONECTOU!")
+except mysql.connector.Error as error:
+	if error.errno == errorcode.ER_BAD_DB_ERROR:
+		print("Não achei o banco de dados, não")
+	elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+		print("Acho que tu errou o nome ou a senha")
+	else:
+		print(error)
+else:
+	db_connection.close()

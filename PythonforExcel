@@ -13,3 +13,10 @@ except mysql.connector.Error as error:
 		print(error)
 else:
 	db_connection.close()
+	
+cnx = mysql.connector.connect
+cur = cnx.cursor
+cur.execute("SHOW STATUS LIKE 'usuario'")
+print(cur.fetchone())
+cur.close()
+cnx.close()

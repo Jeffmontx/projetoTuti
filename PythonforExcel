@@ -1,9 +1,16 @@
+# Conexão com o banco de dados e importação das libs.
 import pandas as pd
 import mysql.connector
 from mysql.connector import errorcode
 try:
-	db_connection = mysql.connector.connect(host='localhost', user='root', password='12345', database='plataforma_ead')
+	db_connection = mysql.connector.connect(host='localhost', user='root', port='3306', password='12345', database='plataforma_ead')
 	print("BOA MANO! CONECTOU!")
+	sql_buscar_usuarios= "SELECT * FROM usuario "
+	cursor = db_connection.cursor()
+	cursor.execute(sql_buscar_usuarios)
+	usuario = cursor.fetchall()
+	for usuarios in usuario:
+		print(usuario)
 except mysql.connector.Error as error:
 	if error.errno == errorcode.ER_BAD_DB_ERROR:
 		print("Não achei o banco de dados, não")
@@ -13,10 +20,3 @@ except mysql.connector.Error as error:
 		print(error)
 else:
 	db_connection.close()
-	
-cnx = mysql.connector.connect
-cur = cnx.cursor
-cur.execute("SHOW STATUS LIKE 'usuario'")
-print(cur.fetchone())
-cur.close()
-cnx.close()

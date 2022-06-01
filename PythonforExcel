@@ -1,16 +1,29 @@
 # Conexão com o banco de dados e importação das libs.
 import pandas as pd
+import openpyxl
+import sqlalchemy
 import mysql.connector
 from mysql.connector import errorcode
 try:
 	db_connection = mysql.connector.connect(host='localhost', user='root', port='3306', password='12345', database='plataforma_ead')
-	print("BOA MANO! CONECTOU!")
-	sql_buscar_usuarios= "SELECT * FROM usuario "
+	sql_buscar_usuarios= "SELECT nome_curso FROM curso"
 	cursor = db_connection.cursor()
 	cursor.execute(sql_buscar_usuarios)
-	usuario = cursor.fetchall()
-	for usuarios in usuario:
-		print(usuario)
+	curso = cursor.fetchall()
+	for cursos in curso:
+		print(cursos)
+
+	projeto_tuti = pd.DataFrame ({'Curso':['Curso Básico de Excel','5´s Aplicado',
+										   'Os 7 despedicios do Lean', 'NR 12-segurança no trabalho com máquinas e equipamentos'
+										   'Planejamento Estratégico', 'Curso Avançado de Excel']})
+	writer = pd.ExcelWriter ('ProjetoTuti.xlsx')
+	df.to_excel (writer, sheet_name='sheet1')
+	writer.save ()
+	writer.close ()
+
+
+
+
 except mysql.connector.Error as error:
 	if error.errno == errorcode.ER_BAD_DB_ERROR:
 		print("Não achei o banco de dados, não")
@@ -20,3 +33,4 @@ except mysql.connector.Error as error:
 		print(error)
 else:
 	db_connection.close()
+

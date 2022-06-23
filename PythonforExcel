@@ -34,3 +34,26 @@ except mysql.connector.Error as error:
 else:
 	db_connection.close()
 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import pandas as pd
+import mysql.connector
+from mysql.connector import errorcode
+try:
+
+	db_connection = mysql.connector.connect(host='localhost', user='root', port='3306', password='12345', database='plataforma_ead')
+	print("BOA MANO! CONECTOU!")
+	sql_buscar_usuarios= "SELECT nome_usuario FROM usuario "
+	cursor = db_connection.cursor()
+	cursor.execute(sql_buscar_usuarios)
+	usuario = cursor.fetchall()
+	for nome_usuario in usuario:
+		print(nome_usuario)
+except mysql.connector.Error as error:
+	if error.errno == errorcode.ER_BAD_DB_ERROR:
+		print("Não achei o banco de dados, não")
+except mysql.connector.Error as error:
+		print(error)
+else:
+	db_connection.close()
